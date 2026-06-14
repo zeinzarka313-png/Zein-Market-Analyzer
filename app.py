@@ -8,6 +8,7 @@ st.set_page_config(page_title="ZEIN ZARKA AI", layout="centered")
 # الربط مع المفتاح السري الآمن
 try:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+    # استخدام النموذج المحدث والمستقر
     model = genai.GenerativeModel('gemini-1.5-flash')
 except Exception as e:
     st.error("خطأ في إعداد المفتاح السري، تأكد من وضعه في إعدادات Streamlit Secrets.")
@@ -23,10 +24,11 @@ if uploaded_file is not None:
     if st.button('بدء التحليل'):
         with st.spinner('جاري التحليل الذكي بواسطة ZEIN ZARKA AI...'):
             try:
+                # التأكد من إرسال الطلب بشكل صحيح
                 response = model.generate_content([
                     "حلل هذا الرسم البياني للسوق، حدد الاتجاه العام، واذكر أهم مستويات الدعم والمقاومة.",
                     image
                 ])
                 st.markdown(response.text)
             except Exception as e:
-                st.error(f"حدث خطأ أثناء التحليل: {e}")
+                st.error(f"حدث خطأ أثناء التحليل (تأكد من صلاحية المفتاح): {e}")
